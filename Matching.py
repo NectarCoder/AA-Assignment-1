@@ -208,6 +208,19 @@ class Match:
                         self._data[temp].removeMatch(student.getName())
                         self._data[position].addMatch(student.getName())
                     applicantnumber+=1
+
+    #
+     # Method name: getMatches
+     # Formal Parameters: None
+     # Return Value: list
+     # Usage: returns the stable matching results
+     #
+    def getMatches(self)->list:
+        matches=[]
+        for elements in self._positions:
+            matches.append(self._data[elements])
+        return matches
+
     #
      # Method name: __str__
      # Formal Parameters: None
