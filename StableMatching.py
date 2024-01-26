@@ -1,34 +1,49 @@
 from Matching import Match
+from StabilityChecker import StabilityChecker 
 import sys
-import os 
+import os
 
-def pathing_creator(name:str)->str:  #pathing in VScode is odd, so this is added to fix it. Shouldn't cause any issues with other IDE's
+def getInputFiles()->list: #pathing in VScode is odd, so this is added to fix it. Shouldn't cause any issues with other IDE's
     path=''
     if getattr(sys,'frozen',False):
         path=os.path.dirname(os.path.realpath(sys.executable))  
     elif __file__:
         path=os.path.dirname(__file__)
-    return os.path.join(path,'MatchingInput',name)  
 
-file=pathing_creator('input_3.txt')
-applicantdata=[]
-positiondata=[]
-switch=False
-with open(file,"r") as rawdata:
-    data=rawdata.read()
-    compiled=data.split('\n')
-    rawdata.close()
-for lines in compiled:
-    if lines=='':
-        switch=True
-    elif switch:
-        applicantdata.append([line.strip() for line in lines.split(",")])
+    dirPath = os.path.join(path,'MatchingInput') 
+    return [os.path.join(dirPath, file) for file in os.listdir(dirPath) if os.path.isfile(os.path.join(dirPath, file))]
+
+for fullFilePath in getInputFiles():
+    applicantdata=[]
+    positiondata=[]
+    switch=False
+    with open(fullFilePath,"r") as rawdata:
+        data=rawdata.read()
+        compiled=data.split('\n')
+        rawdata.close()
+    for lines in compiled:
+        if lines=='':
+            switch=True
+        elif switch:
+            applicantdata.append([line.strip() for line in lines.split(",")])
+        else:
+            positiondata.append([line.strip() for line in lines.split(",")])
+
+    matching=Match(applicantdata,positiondata)
+    matching.stableMatch()
+
+    matches = matching.getMatches()
+    stabilityChecker = StabilityChecker(applicantdata, positiondata, matches)
+    unstableMatches = stabilityChecker.stabilityCheckAll()
+    if len(unstableMatches) > 0:
+        print('Stability Checker complete: Unstable matches found.')
+        print(','.join(unstableMatches))
     else:
-        positiondata.append([line.strip() for line in lines.split(",")])
+        print('Stability Checker complete: No unstable matches found.')
 
-matching=Match(applicantdata,positiondata)
-matching.stableMatch()
-print(matching)
+    # print Match results
+    print(matching)
+
 
 
 
