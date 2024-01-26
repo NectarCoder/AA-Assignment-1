@@ -23,8 +23,8 @@ class position:
     # Return Value: list
     # Usage: returns the preference of the position
     #
-    def getPreference(self)->list:
-        return self._preference
+    def getPreference(self,prioritynumber)->list:
+        return self._preference[prioritynumber]
     #
      # Method name: getOpenings
      # Formal Parameters: None
@@ -89,10 +89,7 @@ class position:
      # Usage: checks to see if there anymore openings in the position
      #
     def full(self)->bool:
-        if self._openings>0:
-            return False
-        else:
-            return True 
+            return False if self._openings>0 else True 
     #
      # Method name: __str__
      # Formal Parameters: None
@@ -158,10 +155,7 @@ class applicant:
     def checkPriority(self,targetposition:str)->bool:
         matchindex=self._preferences.index(self._match)
         targetindex=self._preferences.index(targetposition)
-        if matchindex<targetindex:                             # priority decided by index position, the lower the index the higher the preference
-            return False
-        else:
-            return True
+        return True if matchindex<targetindex else False       # priority decided by index position, the lower the index the higher the preference
 #
  # Class Name: Match
  # Class Variables:
@@ -203,8 +197,8 @@ class Match:
             for position in self._positions:  
                 applicantnumber=0                                                  # used to keep track of the index of the list of preferences from the position
                 while not self._data[position].full():
-                    student=self._data[position].getPreference()[applicantnumber]  # pulls up the targeted applicant based on the position's preferences
-                    student=self._data[student]                                    # targeted student object data pulled from dictionary and assigned
+                    studentname=self._data[position].getPreference(applicantnumber)  # pulls up the targeted applicant based on the position's preferences
+                    student=self._data[studentname]                                    # targeted student object data pulled from dictionary and assigned
                     if student.getMatch()==None:                                
                         student.setMatch(position)
                         self._data[position].addMatch(student.getName())
