@@ -155,7 +155,7 @@ class applicant:
     def checkPriority(self,targetposition:str)->bool:
         matchindex=self._preferences.index(self._match)
         targetindex=self._preferences.index(targetposition)
-        return True if matchindex<targetindex else False       # priority decided by index position, the lower the index the higher the preference
+        return True if matchindex>targetindex else False       # priority decided by index position, the lower the index the higher the preference
 #
  # Class Name: Match
  # Class Variables:
