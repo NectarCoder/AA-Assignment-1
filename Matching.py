@@ -97,7 +97,7 @@ class position:
      # Usage: returns a string of the method when the object is printed
      #
     def __str__(self)->str:
-        container=f'{self._name}-{self.getMatch()}'
+        container=f'{self._name},{",".join(self.getMatch())}'
         return container
 #
  # Class Name: applicant
