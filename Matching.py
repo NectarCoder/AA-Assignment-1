@@ -186,12 +186,40 @@ class Match:
             if not self._data[elements].full():
                 return False
         return True
+
+
+    # Gale Shapley Algorithm pseudocode
     #
-     # Method name: stableMatch
-     # Formal Parameters: None
-     # Return Value: None
-     # Usage: Using the Gale Algorithm, a perfect match is found between the positions available and the applications submitted
-     #
+    # FUNCTION stableMatch() {
+    #   WHILE not all positions are stably matched {
+    #       FOR EACH position in list of positions {
+    #           SET current preferred applicants to 0
+    #           GET the name of the next preferred student for the position
+    #           WHILE the hospital is not full {
+    #               RETRIEVE the student object for that student
+    #               IF student is currently unmatched {
+    #                   MATCH student to the position
+    #                   ADD student's name to list of matches for the position
+    #               }
+    #               ELSE IF student prefers current position over current match {
+    #                   STORE student's current match position temporarily
+    #                   UPDATE student's match to current position
+    #                   REMOVE student's name from list of matches for previous position
+    #                   ADD student's name to list of matches for current position
+    #               }
+    #               INCREMENT current preferred applicant by 1
+    #           }
+    #        }
+    #   }
+    #
+    #
+    # Gale Shapley Algorithm python code
+    #
+    # Method name: stableMatch
+    # Formal Parameters: None
+    # Return Value: None
+    # Usage: Using the Gale Algorithm, a perfect match is found between the positions available and the applications submitted
+    #
     def stableMatch(self)->None:
         while not self.checkMatch():
             for position in self._positions:  
