@@ -1,35 +1,37 @@
 from Matching import Match
-from StabilityChecker import StabilityChecker 
+from StabilityChecker import StabilityChecker
 import sys
 import os
 
-def getInputFiles()->list: #pathing in VScode is odd, so this is added to fix it. Shouldn't cause any issues with other IDE's
-    path=''
-    if getattr(sys,'frozen',False):
-        path=os.path.dirname(os.path.realpath(sys.executable))  
-    elif __file__:
-        path=os.path.dirname(__file__)
 
-    dirPath = os.path.join(path,'MatchingInput') 
+def getInputFiles() -> list:  # pathing in VScode is odd, so this is added to fix it. Shouldn't cause any issues with other IDE's
+    path = ''
+    if getattr(sys, 'frozen', False):
+        path = os.path.dirname(os.path.realpath(sys.executable))
+    elif __file__:
+        path = os.path.dirname(__file__)
+
+    dirPath = os.path.join(path, 'MatchingInput')
     return [os.path.join(dirPath, file) for file in os.listdir(dirPath) if os.path.isfile(os.path.join(dirPath, file))]
 
+
 for fullFilePath in getInputFiles():
-    applicantdata=[]
-    positiondata=[]
-    switch=False
-    with open(fullFilePath,"r") as rawdata:
-        data=rawdata.read()
-        compiled=data.split('\n')
+    applicantdata = []
+    positiondata = []
+    switch = False
+    with open(fullFilePath, "r") as rawdata:
+        data = rawdata.read()
+        compiled = data.split('\n')
         rawdata.close()
     for lines in compiled:
-        if lines=='':
-            switch=True
+        if lines == '':
+            switch = True
         elif switch:
             applicantdata.append([line.strip() for line in lines.split(",")])
         else:
             positiondata.append([line.strip() for line in lines.split(",")])
 
-    matching=Match(applicantdata,positiondata)
+    matching = Match(applicantdata, positiondata)
     matching.stableMatch()
 
     matches = matching.getMatches()
@@ -43,10 +45,3 @@ for fullFilePath in getInputFiles():
 
     # print Match results
     print(matching)
-
-
-
-
-
-    
-
