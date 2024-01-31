@@ -11,8 +11,8 @@ Assignment 1 submission work for CS 6045/W01 - Advanced Algorithms.
 
 Ensure Python 3.12 or higher is installed.  
 
-Open a terminal window and change directories to this project. Enter the following command:  
-`python .\StableMatching.py`  
+Open a terminal window and change directories to this project. `main.py` is the main Stable Matching script. Enter the following command:  
+`python .\main.py`  
 
 Input files under the MatchingInput folder will be used to perform the stable matching. Outputs for all will be displayed in the console.  
 
